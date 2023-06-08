@@ -1,5 +1,6 @@
 package com.example.healthcare
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,6 +19,8 @@ class LoginActivity : AppCompatActivity() {
 
         username=findViewById(R.id.editTextLoginUsername)
         password=findViewById(R.id.editTextLoginPassword)
+
+//        created instance
         val db = DataBase(this,"healthcare",null,1)
 
 
@@ -29,7 +32,14 @@ class LoginActivity : AppCompatActivity() {
             else{
                 if(db.login(username,password)==1) {
                     Toast.makeText(this, "Login Success", Toast.LENGTH_SHORT).show()
+                    val sharedpref = getSharedPreferences ("shared_prefs", Context.MODE_PRIVATE)
+                    val editor= sharedpref.edit()
+                    editor.putString("username",username)
+                    editor.apply()
 
+
+                    val intent = Intent(this, HomeActivity::class.java)
+                    startActivity(intent)
                 }else
                     Toast.makeText(this,"Invalid Credentials",Toast.LENGTH_SHORT).show()
             }

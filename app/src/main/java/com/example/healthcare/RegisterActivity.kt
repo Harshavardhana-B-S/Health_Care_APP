@@ -23,6 +23,8 @@ class RegisterActivity : AppCompatActivity() {
         mailId = findViewById(R.id.editTextRegEmailId)
         password = findViewById(R.id.editTextRegPassword)
         confirmPassword = findViewById(R.id.editTextRegConfirmPassword)
+//            created instance
+            val db = DataBase(this,"healthcare",null,1)
 
         buttonRegister.setOnClickListener {
 
@@ -36,7 +38,8 @@ class RegisterActivity : AppCompatActivity() {
             else {
                 if (password.compareTo(confirmPassword) == 0) {
                     if (isValid(password)) {
-
+                  //database function
+                        db.register(username,mailId,password)
                         Toast.makeText(this, "Record Inserted", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, LoginActivity::class.java)
                         startActivity(intent)
