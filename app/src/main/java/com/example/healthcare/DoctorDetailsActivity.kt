@@ -4,7 +4,8 @@ package com.example.healthcare
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
+import android.view.View
+import android.widget.AdapterView
 import android.widget.Button
 import android.widget.ListView
 import android.widget.SimpleAdapter
@@ -120,7 +121,30 @@ class DoctorDetailsActivity : AppCompatActivity() {
        lst=findViewById(R.id.listViewDD)
         lst.adapter = sa
 
+//        lst.setOnClickListener {
+//            fun onItemClick(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
+//                val intent = Intent(this, BookAppointmentActivity::class.java)
+//                intent.putExtra("text1", titleDD.text.toString())
+//                intent.putExtra("text2", doctorDetails[i][0])
+//                intent.putExtra("text3", doctorDetails[i][1])
+//                intent.putExtra("text4", doctorDetails[i][3])
+//                intent.putExtra("text5", doctorDetails[i][4])
+//                startActivity(intent)
+//            }
+//
+//        }
 
+
+        // On Click feature is enabled on all the items shown in a list
+        lst.setOnItemClickListener { adapterView, view, i, l ->
+            val intent = Intent(this, BookAppointmentActivity::class.java)
+            intent.putExtra("text1", titleDD.text.toString())
+            intent.putExtra("text2", doctorDetails[i][0])
+            intent.putExtra("text3", doctorDetails[i][1])
+            intent.putExtra("text4", doctorDetails[i][3])
+            intent.putExtra("text5", doctorDetails[i][4])
+            startActivity(intent)
+        }
 
 
 
