@@ -15,6 +15,9 @@ class DataBase(context: Context, s: String, nothing: Nothing?, i: Int) : SQLiteO
     override fun onCreate(sqLiteDatabase: SQLiteDatabase) {
         val qry1 = "CREATE TABLE users (username TEXT, email TEXT, password TEXT)"
         sqLiteDatabase.execSQL(qry1)
+
+        val qry2 = "CREATE TABLE cart (username TEXT, product TEXT, price float,otype TEXT)"
+        sqLiteDatabase.execSQL(qry2)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -48,6 +51,45 @@ class DataBase(context: Context, s: String, nothing: Nothing?, i: Int) : SQLiteO
         return result
     }
 
+    fun addCart(username: String,product: String,price:Float, otype:String){
+        val cv = ContentValues().apply {
+            put("username", username)
+            put("product", product)
+            put("price", price)
+            put("otype",otype)
+        }
 
+        val db: SQLiteDatabase = writableDatabase
+        db.insert("cart", null, cv)
+        db.close()
+    }
+
+    fun checkCart(username: String, product: String): Int{
+        var str = arrayOfNulls<String>(2)
+        str[0]=username
+        str[1]=product
+
+        val db: SQLiteDatabase = readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM cart WHERE username=? AND product=?",str)
+
+        val result = if (cursor.moveToFirst()) {
+            1 // Match found
+        }else
+        {
+            0
+        }
+        db.close()
+        return result
+    }
+
+    fun removeCart(username:String,otype: String){
+        var str=arrayOf("","")
+        str[0]=username
+        str[1]=otype
+        val db: SQLiteDatabase = writableDatabase
+
+        db.delete("cart","username=? and oytpe=?",str)
+        db.close()
+    }
 
 }
