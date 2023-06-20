@@ -92,4 +92,25 @@ class DataBase(context: Context, s: String, nothing: Nothing?, i: Int) : SQLiteO
         db.close()
     }
 
+    fun getCartData(username: String, otype: String): ArrayList<String>{
+        var arr: ArrayList<String> = ArrayList() //empty arrayList
+        val db: SQLiteDatabase = readableDatabase // instance of SQLite
+        var str = arrayOfNulls<String>(2)   // array empty
+        str[0]=username
+        str[1]=otype
+        val cursor = db.rawQuery("SELECT * FROM cart WHERE username=? AND otype=?",str)
+
+       if (cursor.moveToFirst()) {
+           do{
+               val product= cursor.getString(1)
+               val price=cursor.getString(2)
+               arr.add(product+"$"+price)
+           }while(cursor.moveToNext())
+       }
+        db.close()
+       return arr
+    }
+
+
+
 }
