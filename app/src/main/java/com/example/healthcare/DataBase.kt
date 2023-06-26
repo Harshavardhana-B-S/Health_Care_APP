@@ -18,6 +18,9 @@ class DataBase(context: Context, s: String, nothing: Nothing?, i: Int) : SQLiteO
 
         val qry2 = "CREATE TABLE cart (username TEXT, product TEXT, price float,otype TEXT)"
         sqLiteDatabase.execSQL(qry2)
+
+        val qry3 = "CREATE TABLE orderPlace(username TEXT,fullName TEXT,address TEXT, contactNUM TEXT,pinCode TEXT, date TEXT, time TEXT, amount float, otype TEXT)"
+        sqLiteDatabase.execSQL(qry3)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -88,7 +91,7 @@ class DataBase(context: Context, s: String, nothing: Nothing?, i: Int) : SQLiteO
         str[1]=otype
         val db: SQLiteDatabase = writableDatabase
 
-        db.delete("cart","username=? and oytpe=?",str)
+        db.delete("cart","username=? and otype=?",str)
         db.close()
     }
 
@@ -104,6 +107,7 @@ class DataBase(context: Context, s: String, nothing: Nothing?, i: Int) : SQLiteO
            do{
                val product= cursor.getString(1)
                val price=cursor.getString(2)
+
                arr.add(product+"$"+price)
            }while(cursor.moveToNext())
        }
@@ -111,6 +115,48 @@ class DataBase(context: Context, s: String, nothing: Nothing?, i: Int) : SQLiteO
        return arr
     }
 
+    fun addOrder(
+        username: String, fullName: String, address:String, contact:String, pinCode: String,
+        date:String,
+        time: String,
+        price: Float,
+        otype: String ){
+
+        val cv = ContentValues().apply {
+
+            put("username", username)
+            put("fullName", fullName)
+            put("address", address)
+            put("contactNum", contact)
+            put("pinCode", username)
+            put("date", date)
+            put("time", time)
+            put("amount", price)
+            put("otype", otype)
+        }
+            val db: SQLiteDatabase = writableDatabase// instance of SQLite
+            db.insert("orderPlace",null,cv);
+            db.close()
+    }
+
+    fun getorderData(username: String): ArrayList<String>{
+        var arr: ArrayList<String> = ArrayList() // List to store User Orders
+        val db: SQLiteDatabase = writableDatabase// instance of SQLite
+        var str= arrayOf("")
+        str[0]=username
+        val c = db.rawQuery("SELECT * FROM orderPlace WHERE username=?",str)
+
+        if (c.moveToFirst()) {
+            do{
+                arr.add(c.getString(1)+"$"+c.getString(2)+"$"+c.getString(3)+"$"+c.getString(4)+"$"+c.getString(5)+"$"+
+                c.getString(6)+"$"+c.getString(7)+"$"+c.getString(8)+"$"+c.getString(9))
+            }while(c.moveToNext())
+        }
+        db.close()
+
+
+        return arr
+    }
 
 
 }
