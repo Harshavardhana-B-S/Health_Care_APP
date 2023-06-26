@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Health Care</string>
+    <string name="textview">TextView</string>
 </resources>
