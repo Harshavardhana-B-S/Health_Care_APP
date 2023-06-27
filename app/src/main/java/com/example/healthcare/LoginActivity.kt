@@ -1,5 +1,6 @@
 package com.example.healthcare
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var password:EditText
 
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -20,13 +22,15 @@ class LoginActivity : AppCompatActivity() {
         username=findViewById(R.id.editTextLoginUsername)
         password=findViewById(R.id.editTextLoginPassword)
 
-//        created instance
+//        created DataBase instance
         val db = DataBase(this,"healthcare",null,1)
 
 
         buttonLogin.setOnClickListener {
             val username=username.text.toString()
             val password=password.text.toString()
+//            val intent = Intent(this, HomeActivity::class.java)
+//                    startActivity(intent)
             if(username.isEmpty() || password.isEmpty())
                 Toast.makeText(this,"Fill Credentials",Toast.LENGTH_SHORT).show()
             else{

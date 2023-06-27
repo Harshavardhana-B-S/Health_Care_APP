@@ -1,12 +1,10 @@
 package com.example.healthcare
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -24,8 +22,8 @@ class LabTestDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lab_test_details)
 
-        totalCost=findViewById(R.id.textViewLBDTCost)
-        pkgName=findViewById(R.id.textViewLBDPkgName)
+        totalCost=findViewById(R.id.textViewCartTotal)
+        pkgName=findViewById(R.id.textViewBM)
         lbDetails=findViewById(R.id.editTextLBD)
 
 //        lbDetails.keyListener=null
@@ -42,7 +40,7 @@ class LabTestDetailsActivity : AppCompatActivity() {
         lbDetails.text = Editable.Factory.getInstance().newEditable(lbDetailsInit)
         totalCost.text = Editable.Factory.getInstance().newEditable("Fess:$totalCostInit/-")
 
-        buttonLBBack.setOnClickListener {
+        buttonODBack.setOnClickListener {
             val it = Intent(this,LabTestActivity::class.java)
             startActivity(it)
         }

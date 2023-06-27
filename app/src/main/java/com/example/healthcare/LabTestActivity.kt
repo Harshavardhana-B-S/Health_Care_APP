@@ -42,7 +42,7 @@ class LabTestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lab_test)
 
-        buttonLBBack.setOnClickListener {
+        buttonODBack.setOnClickListener {
             val intent= Intent(this,HomeActivity::class.java)
             startActivity(intent)
         }
@@ -69,13 +69,18 @@ class LabTestActivity : AppCompatActivity() {
 
 
        // set adapter on the list
-        listViewLB.adapter = sa
+        listViewBM.adapter = sa
 
-        listViewLB.setOnItemClickListener { adapterView, view, i, l ->
+        listViewBM.setOnItemClickListener { adapterView, view, i, l ->
             val intent = Intent(this,LabTestDetailsActivity::class.java)
             intent.putExtra("text1", packages[i][0])
             intent.putExtra("text2", packagesDetails[i])
             intent.putExtra("text3", packages[i][4])
+            startActivity(intent)
+        }
+
+        buttonLBAddCart.setOnClickListener {
+            val intent = Intent(this,CartLabActivity::class.java)
             startActivity(intent)
         }
 

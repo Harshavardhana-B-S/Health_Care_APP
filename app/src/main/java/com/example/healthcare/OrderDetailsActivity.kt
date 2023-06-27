@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.SimpleAdapter
 import kotlinx.android.synthetic.main.activity_order_details.buttonODBack
-import kotlinx.android.synthetic.main.activity_order_details.listViewOD
+import kotlinx.android.synthetic.main.activity_order_details.listViewBM
 
 class OrderDetailsActivity : AppCompatActivity() {
 
@@ -69,7 +69,7 @@ class OrderDetailsActivity : AppCompatActivity() {
             intArrayOf(R.id.line_a, R.id.line_b, R.id.line_c, R.id.line_d, R.id.line_e)
         )
 
-        listViewOD.adapter = sa
+        listViewBM.adapter = sa
 
 
 

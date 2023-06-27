@@ -32,5 +32,19 @@ class HomeActivity : AppCompatActivity() {
              val intent = Intent(this, LoginActivity::class.java)
              startActivity(intent)
          }
+
+        cardLabTest.setOnClickListener{
+            val it=Intent(this,LabTestActivity::class.java)
+            startActivity(it)
+        }
+
+        cardOrderDetails.setOnClickListener {
+            val it=Intent(this,OrderDetailsActivity::class.java)
+            startActivity(it)
+        }
+        cardBuyMedicine.setOnClickListener {
+            val it=Intent(this,BuyMedicineActivity::class.java)
+            startActivity(it)
+        }
     }
 }
