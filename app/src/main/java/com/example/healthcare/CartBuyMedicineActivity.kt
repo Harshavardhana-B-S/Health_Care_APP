@@ -1,8 +1,6 @@
 package com.example.healthcare
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -12,35 +10,31 @@ import android.widget.SimpleAdapter
 import android.widget.TextView
 import android.widget.Toast
 
-import kotlinx.android.synthetic.main.activity_cart_lab.*
-//import kotlinx.android.synthetic.main.activity_cart_lab.listViewBM
+import kotlinx.android.synthetic.main.activity_cart_buy_medicine.*
 
 import java.util.Calendar
 
-class CartLabActivity : AppCompatActivity() {
+class CartBuyMedicineActivity : AppCompatActivity() {
 
-    //create variables/instance
     private lateinit var dateBtn: Button
-    private lateinit var timeBtn: Button
     private lateinit var total: TextView
 
 
 
     // Create Date and time picker variables/instance
     private lateinit var datePickerDialog: DatePickerDialog
-    private lateinit var timePickerDialog: TimePickerDialog
 
 
-    @SuppressLint("MissingInflatedId")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_cart_lab)
+        setContentView(R.layout.activity_cart_buy_medicine)
 
         dateBtn=findViewById(R.id.buttonCartDate)
-        timeBtn=findViewById(R.id.buttonCartTime)
-        total=findViewById(R.id.labCartTotal)
 
-        //  Shared Pref instance
+        total=findViewById(R.id.BMDCartTotal)
+
+
         val sharedpref = getSharedPreferences ("shared_prefs", Context.MODE_PRIVATE)
         val username=sharedpref.getString("username","").toString()
 
@@ -48,7 +42,7 @@ class CartLabActivity : AppCompatActivity() {
         val db = DataBase(this,"healthcare",null,1)
 
         //get item in Cart
-        val dbData: ArrayList<String> = db.getCartData(username, "lab")
+        val dbData: ArrayList<String> = db.getCartData(username, "medicine")
 //        Toast.makeText(applicationContext,""+dbData,Toast.LENGTH_LONG).show()
 
         var totalAmt: Float = 0.0f
@@ -86,20 +80,20 @@ class CartLabActivity : AppCompatActivity() {
             intArrayOf(R.id.line_a, R.id.line_b, R.id.line_c, R.id.line_d, R.id.line_e)
         )
 
-       //instance of ListView and add adapter
-        listViewLab.adapter = sa
+        //instance of ListView and add adapter
+        listViewBM.adapter = sa
 
 
 
         buttonCartBack.setOnClickListener {
-            val intent= Intent(this,LabTestActivity::class.java)
+            val intent= Intent(this,BuyMedicineActivity::class.java)
             startActivity(intent)
         }
+
         buttonCheckOut.setOnClickListener {
-            val intent = Intent(this, LabTestBookActivity::class.java)
+            val intent = Intent(this,BuyMedicineBookActivity::class.java)
             intent.putExtra("price", total.text)
             intent.putExtra("date", dateBtn.text)
-            intent.putExtra("time", timeBtn.text)
             startActivity(intent)
         }
 
@@ -109,10 +103,9 @@ class CartLabActivity : AppCompatActivity() {
         }
 
         //time picker
-        timeBtn.setOnClickListener{
-            showTimePickerDialog()
-        }
+
     }
+
     private fun showDatePickerDialog() {
         val currentDate = Calendar.getInstance()
         val year = currentDate.get(Calendar.YEAR)
@@ -142,32 +135,5 @@ class CartLabActivity : AppCompatActivity() {
 
         // Show the DatePickerDialog
         datePickerDialog.show()
-    }
-
-    private fun showTimePickerDialog() {
-
-        var selectedTime: String = ""
-
-        val currentTime = Calendar.getInstance()
-        val hour = currentTime.get(Calendar.HOUR_OF_DAY)
-        val minute = currentTime.get(Calendar.MINUTE)
-
-        // Create a TimePickerDialog and set the initial time to the current time
-        timePickerDialog = TimePickerDialog(
-            this,
-            TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-                // Update the selectedTime variable with the selected time
-                selectedTime = String.format("%02d:%02d", hourOfDay, minute)
-
-                // Update the buttonAppTime text with the selected time
-                buttonCartTime.text = selectedTime
-            },
-            hour,
-            minute,
-            true // Set the 24-hour format to true
-        )
-
-        // Show the TimePickerDialog
-        timePickerDialog.show()
     }
 }

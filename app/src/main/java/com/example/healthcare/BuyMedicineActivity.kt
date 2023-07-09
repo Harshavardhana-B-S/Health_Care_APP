@@ -54,6 +54,11 @@ class BuyMedicineActivity : AppCompatActivity() {
             startActivity(it)
         }
 
+        buttonBMAddCart.setOnClickListener {
+            val it = Intent(this,CartBuyMedicineActivity::class.java)
+            startActivity(it)
+        }
+
         val list = mutableListOf<MutableMap<String, String>>()
         for(i in 0 until packages.size){
             val item = mutableMapOf<String, String>()
@@ -73,5 +78,15 @@ class BuyMedicineActivity : AppCompatActivity() {
             intArrayOf(R.id.line_a, R.id.line_b, R.id.line_c, R.id.line_d, R.id.line_e)
         )
         listViewBM.adapter=sa
+
+        listViewBM.setOnItemClickListener { adapterView, view, i, l ->
+            val intent = Intent(this, BuyMedicineDetailsActivity::class.java)
+            intent.putExtra("text1", packages[i][0])
+            intent.putExtra("text2",package_details[i])
+            intent.putExtra("text3", packages[i][4])
+            startActivity(intent)
+        }
+
+
     }
 }
